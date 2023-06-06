@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title> 
+    <link rel="stylesheet" href="sign_up.css">
+   </head>
+<body>
+  <div class="wrapper">
+    <h2>Registration</h2>
+    <form action="#">
+      
+      <div class="input-box">
+        <input type="email" id="email" placeholder="Enter your email" required>
+      </div>
+      <div class="input-box">
+        <input type="password" id="password" placeholder="Create password" required>
+      </div>
+      
+      <div class="policy">
+        <input type="checkbox">
+        <h3>I accept all terms & condition</h3>
+      </div>
+      <div class="input-box button">
+        <input type="Submit" id="signUp" onclick="signUp()" value="Register Now">
+      </div>
+      <div class="text">
+        <h3>Already have an account? <a href="login.html">Login now</a></h3>
+      </div>
+    </form>
+  </div>
+  
+</body>
+<body>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+    import { getDatabase,set,ref } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database .js";
+
+
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCkzvNTTL4kbdhKJbvAlbt3SwSzIDYsnpA",
+      authDomain: "authenticationveat.firebaseapp.com",
+      databaseURL: "https://authenticationveat-default-rtdb.firebaseio.com",
+      projectId: "authenticationveat",
+      storageBucket: "authenticationveat.appspot.com",
+      messagingSenderId: "129943621997",
+      appId: "1:129943621997:web:231b246aac5cfecd800a64"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+    document.getElementById("signup").addEventListener('click',(e) =>{
+      var email =document.getElementById('email').value;
+      var password =document.getElementById('password').value;
+      createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    // ...
+    set(ref(database, 'users/' + user.uid), {
+    
+    email: email,
+    password: password,
+  })
+  .then(() => {
+  // Data saved successfully!
+  alert('user created successfully');
+})
+.catch((error) => {
+  // The write failed...
+});
+    alert('user created successfully')
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+    alert(errormessage);
+  });
+
+
+});
+  </script>
+  
+
+  
+  
+</body>
+<body>
+
+</body>
+
+ 
+</html>
